@@ -1,62 +1,25 @@
-var express = require("express");
-var bodyParser = require("body-parser");
-var mongodb = require("mongodb");
-var ObjectId = mongodb.ObjectId;
-var cors = require('cors');
-
-var VIDEO_COLLECTION = "videos";
-
+var mongoose = require('mongoose');
+var express = require('express');
 var app = express();
-app.use(cors());
-app.use(bodyParser.json());
+var router = express.Router();
+var videoInfo = require("./controllers/videoInfoController.js");
+mongoose.Promise = global.Promise;
 
-// Create a database variable outside of the database connection callback to reuse the connection pool in your app.
-var db;
+mongoose.connect('mongodb://admin:admin@ds113749.mlab.com:13749/sadhguru')
+    .then(() => console.log('Connected'))
+    .catch((err) => console.error(err));
 
-// Connect to the database before starting the application server.
-mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, database) {
-  if (err) {
-    console.log(err);
-    process.exit(1);
-  }
-
-  // Save database object from the callback for reuse.
-  db = database;
-  console.log("Database connection ready");
-
-  // Initialize the app.
-  var server = app.listen(process.env.PORT || 8080, function() {
-    var port = server.address().port;
-    console.log("App now running on port", port);
-  });
+app.listen(3000, () => {
+    console.log("Server is listening on port 3000");
 });
 
+var bodyParser = require('body-parser');
 
+app.use(bodyParser.urlencoded({ extended: false }))
 
-// Generic error handler used by all endpoints.
-function handleError(res, reason, message, code) {
-  console.log("ERROR: " + reason);
-  res.status(code || 500).json({"error": message});
-}
+// parse application/json
 
-/*  heartbeat
- */
-app.get("/", function(req, res) {
-    res.status(200).json({message: "Welcome to Sadhguru Insights API!"});
-});
+app.use(bodyParser.json())
 
-
-// VIDEO API ROUTES BELOW
-
-/*  "/api/videos"
- *    GET: find trip matching id
- */
-app.get("/api/videos", function(req, res) {
-    db.collection(VIDEO_COLLECTION).find({}, function(err, doc) {
-      if (err) {
-        handleError(res, err.message, "Failed to get all videos");
-      } else {
-        res.status(200).json(doc);
-      }
-    });
-});
+// Save video info
+app.use('/video', videoInfo);
