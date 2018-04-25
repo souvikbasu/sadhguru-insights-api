@@ -27,6 +27,7 @@ router.get('/getVideos', function (req, res, next) {
 
 router.get('/test', function (req, res, next) {
     console.log('api is running');
+    res.send('Api is running');
 });
 
 module.exports = router;

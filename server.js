@@ -22,4 +22,4 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 // Save video info
-app.use('/video', videoInfo);
+app.use('/', videoInfo);
