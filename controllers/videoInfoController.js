@@ -4,9 +4,7 @@ var router = express.Router();
 var VideoInfo = require('../models/VideoInfoModel');
 var VideoInfoController = {};
 
-router.post('/save', function (req, res, next) {
-    console.log(req.body);
-    console.log("running");
+router.post('/video', function (req, res, next) {
     var videoInfo = new VideoInfo(req.body);
     videoInfo.save(function (err) {
         if (err) {
@@ -19,7 +17,7 @@ router.post('/save', function (req, res, next) {
     });
 });
 
-router.get('/getVideos', function (req, res, next) {
+router.get('/video', function (req, res, next) {
     VideoInfo.find(function (err, data) {
         res.send(data);
     });
