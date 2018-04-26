@@ -2,14 +2,12 @@ var mongoose = require("mongoose");
 var express = require('express');
 var router = express.Router();
 var VideoInfo = require('../models/VideoInfoModel');
-var VideoInfoController = {};
 
 router.post('/video', function (req, res, next) {
     var videoInfo = new VideoInfo(req.body);
     videoInfo.save(function (err) {
         if (err) {
             console.log(err);
-
         } else {
             console.log("successfull");
             res.send({message : "saved"})
