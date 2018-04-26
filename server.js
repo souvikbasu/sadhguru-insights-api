@@ -4,7 +4,7 @@ var app = express();
 var videoInfo = require("./controllers/videoInfoController.js");
 mongoose.Promise = global.Promise;
 
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://admin:admin@ds113749.mlab.com:13749/sadhguru')
     .then(() => console.log('Connected'))
     .catch((err) => console.error(err));
 
