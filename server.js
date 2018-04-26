@@ -8,6 +8,8 @@ mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('Connected'))
     .catch((err) => console.error(err));
 
+var cors=require('cors');
+app.use(cors({origin:true,credentials: true}));
 var port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log("Server is listening on port " + port);
