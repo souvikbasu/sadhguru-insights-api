@@ -21,6 +21,15 @@ router.get('/video', function (req, res, next) {
     });
 });
 
+router.post('/videosbytag', function (req, res, next) {
+    //PersonModel.find({ "favouriteFoods.name": "Sushi" });
+    let tag = req.body.tag
+    VideoInfo.find({ "tags": tag }, function (err, data) {
+        res.send(data);
+    });
+    //res.send('Api is running');
+});
+
 router.get('/test', function (req, res, next) {
     console.log('api is running');
     res.send('Api is running');
