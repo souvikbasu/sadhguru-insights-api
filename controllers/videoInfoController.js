@@ -11,7 +11,7 @@ router.post('/video', function (req, res, next) {
             console.log(err);
         } else {
             console.log("successfull");
-            res.send({message : "saved"})
+            res.send({ message: "saved" })
         }
     });
 });
