@@ -32,17 +32,16 @@ router.get('/tags', function (req, res, next) {
 router.get('/videos', function (req, res, next) {
     var url_parts = url.parse(req.url, true);
     var query = url_parts.query.tag;
-    VideoInfo.find({ "tags": query }, function (err, data) {
-        res.send(data);
-    });
-});
-
-router.get('/all-videos', function (req, res, next) {
-    var url_parts = url.parse(req.url, true);
-    var query = url_parts.query.tag;
-    VideoInfo.find(function (err, data) {
-        res.send(data);
-    });
+    if(query == ''){
+        VideoInfo.find(function (err, data) {
+            res.send(data);
+        });
+    }
+    else{
+        VideoInfo.find({ "tags": query }, function (err, data) {
+            res.send(data);
+        });
+    }    
 });
 
 router.get('/test', function (req, res, next) {
